@@ -62,7 +62,6 @@
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
 
-    // فتح وإغلاق الشات
     chatbotToggle.addEventListener('click', () => {
         chatbotWindow.classList.toggle('hidden');
         chatbotWindow.classList.toggle('flex');
