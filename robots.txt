@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config.php
+
+Sitemap: https://kaiser.free.nf/sitemap.xml

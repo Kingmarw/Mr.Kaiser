@@ -1,0 +1,20 @@
+# منع استعراض المجلدات (عشان ميدي كود 403 لو الملف مش موجود)
+Options -Indexes
+
+# تحديد الملفات الافتراضية اللي السيرفر يفتحها أول ما تدخل أي فولدر
+DirectoryIndex index.php index.html chatbot.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # السماح بالوصول لملف البوت حتى لو فيه Parameters
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^chatbot$ chatbot.php [L]
+</IfModule>
+
+# حل مشكلة الصلاحيات لملفات الـ PHP
+<Files *.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
