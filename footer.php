@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-/* تأثير النبض للواتساب */
+
 @keyframes pulse-whatsapp {
     0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
     70% { box-shadow: 0 0 0 15px rgba(34,197,94,0); }
@@ -43,16 +43,6 @@
 </div>
 
 <div class="fixed bottom-5 left-5 z-40 flex flex-col gap-3 items-center">
-    
-    <a href="chatbot.php" class="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition transform hover:scale-110 group relative">
-        <i class="fa-solid fa-robot text-2xl"></i>
-        <span class="absolute left-16 bg-black text-white text-xs px-2 py-1 rounded hidden group-hover:block whitespace-nowrap">المساعد الذكي</span>
-    </a>
-
-    <a href="https://call.xo.je" target="_blank" class="w-14 h-14 bg-indigo-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-600 transition transform hover:scale-110 group relative">
-        <i class="fa-solid fa-users text-2xl"></i>
-        <span class="absolute left-16 bg-black text-white text-xs px-2 py-1 rounded hidden group-hover:block whitespace-nowrap">المجتمع الطلابي</span>
-    </a>
 
     <a href="https://wa.me/201099534259" target="_blank" class="whatsapp-float w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition transform hover:scale-110 group relative">
         <i class="fa-brands fa-whatsapp text-3xl"></i>
