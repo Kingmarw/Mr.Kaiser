@@ -5,7 +5,7 @@ if ($_SESSION['role'] !== 'admin') {
     die("Access denied");
 }
 
-
+// 1. منطق حذف طالب
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     try {
@@ -17,7 +17,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
-
+// 2. معالجة البحث والفلترة
 $search = $_GET['search'] ?? '';
 $grade_filter = $_GET['grade'] ?? '';
 
@@ -60,6 +60,11 @@ $grades = [
         <a href="add_students.php" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-blue-200 dark:shadow-none flex items-center gap-2">
             <span>+</span> إضافة طالب جديد
         </a>
+        <button type="button" onclick="window.print()" 
+                class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-emerald-200 dark:shadow-none flex items-center gap-2">
+            <i class="fa-solid fa-print"></i>
+            طباعة الصفحة
+        </button>
     </div>
 
     <div class="bg-white dark:bg-slate-800 p-4 rounded-3xl mb-6 border border-gray-100 dark:border-slate-700 shadow-sm">
