@@ -1,51 +1,4 @@
 <?php
-// معالج طلبات الشات بوت في أول ملف index.php
-if (isset($_GET['chat_action'])) {
-    header('Content-Type: application/json');
-    
-    $apiKey = "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";
-    $jsonInput = file_get_contents('php://input');
-    $input = json_decode($jsonInput, true);
-    $userMsg = $input['message'] ?? 'أهلاً';
-
-    $ch = curl_init("https://openrouter.ai/api/v1/chat/completions");
-    
-    $postData = [
-        "model" => "inclusionai/ling-2.6-1t:free",
-        "messages" => [
-            ["role" => "system", "content" => "أنت مساعد ذكي لمنصة القيصر التعليمية. واسمك نينو بوت أجب بالعامية المصرية."],
-            ["role" => "user", "content" => $userMsg]
-        ]
-    ];
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer " . $apiKey,
-        "Content-Type: application/json",
-        "HTTP-Referer: https://kaiser.free.nf",
-        "X-Title: Kaiser Academy"
-    ]);
-    
-
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-    $res = curl_exec($ch);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($error) {
-        echo json_encode(['error' => $error]);
-    } else {
-        echo $res;
-    }
-    exit;
-}
-?>
-
-<?php
 
 require_once 'config.php';
 
@@ -504,9 +457,6 @@ if (isset($_POST['send_test'])) {
                 <a href="https://wa.me/+201099534259" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-400 hover:text-white transition"><i class="fa-brands fa-whatsapp text-2xl"></i></a>
                 <a href="https://youtube.com/@kaisarAhmedibrahim" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
             </div>
-        </div>
-        <div class="dev text-center mt-10">
-            <p class="text-xl">< / <a class="kaiser" href="https://kingmarw.vercel.app">Kingmarw</a>  Developed By > </p>
         </div>
 		<?php include 'footer.php'; ?>
     </footer>
