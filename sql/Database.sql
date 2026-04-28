@@ -2,7 +2,7 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: sql209.infinityfree.com
+-- Host: 127.0.0.1
 -- Generation Time: Apr 27, 2026 at 08:37 PM
 -- Server version: 11.4.10-MariaDB
 -- PHP Version: 7.2.22
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `if0_41732295_ahmedp_db`
+-- Database: `elqaisaracademy`
 --
 
 -- --------------------------------------------------------
