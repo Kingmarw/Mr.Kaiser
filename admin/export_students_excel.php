@@ -43,12 +43,12 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-// UTF-8 BOM عشان العربي يطلع صح في Excel
+// for UTF-8
 echo "\xEF\xBB\xBF";
 
 $output = fopen("php://output", "w");
 
-// الهيدر
+// header
 fputcsv($output, ['الاسم', 'رقم الهاتف', 'الرصيد', 'الصف']);
 
 foreach ($students as $s) {
