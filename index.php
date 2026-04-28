@@ -1,15 +1,11 @@
 <?php
-
 require_once 'config.php';
-
 ?>
-
-
 <?php
 
 try {
     $query = "SELECT * FROM lessons ORDER BY created_at DESC LIMIT 3";
-    $stmt = $pdo->prepare($query); // التعديل هنا (pdo بدل conn)
+    $stmt = $pdo->prepare($query);
     $stmt->execute();
     $lectures = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -38,41 +34,6 @@ foreach ($grades_data as $grade) {
 
     $grade['count'] = $count . " محاضرة";
     $grades[] = $grade;
-}
-?>
-<?php
-if (isset($_POST['send_test'])) {
-    $app_id = "124451b2-64b8-46aa-9a21-209f69ac79be"; // الـ ID بتاعك
-    $rest_key = "os_v2_app_cjcfdmtexbdkvgrbecpwtldzx2j74mu7zm2usj5dgskbzkj5rlocynp3oqaw6ruv5ym7zsa3u7sckts55jbbwknxi7c3ldj7ka2t5hi"; // املأ الفراغ هنا!
-
-    $content = array("en" => 'مبروك! الإشعارات شغالة في منصتك بنجاح 🚀');
-    $headings = array("en" => 'تجربة إشعار');
-
-    $fields = array(
-        'app_id' => $app_id,
-        'included_segments' => array('All'),
-        'contents' => $content,
-        'headings' => $headings
-    );
-
-    $fields = json_encode($fields);
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/json; charset=utf-8',
-        'Authorization: Basic ' . $rest_key
-    ));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_HEADER, FALSE);
-    curl_setopt($ch, CURLOPT_POST, TRUE);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-    $response = curl_exec($ch);
-    curl_close($ch);
-    
-    $msg_push = "تم طلب إرسال الإشعار!";
 }
 ?>
 <!DOCTYPE html>
@@ -147,20 +108,6 @@ if (isset($_POST['send_test'])) {
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
     </style>
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-            appId: "124451b2-64b8-46aa-9a21-209f69ac79be",
-            serviceWorkerPath: 'OneSignalSDKWorker.js',
-            serviceWorkerParam: { scope: './' },
-            notifyButton: {
-                enable: true,
-            },
-        });
-    });
-    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -442,14 +389,6 @@ if (isset($_POST['send_test'])) {
             <div class="text-center md:text-right">
                 <h4 class="text-white font-black text-2xl mb-2">القيصر احمد إبراهيم</h4>
                 <p class="text-sm">جميع الحقوق محفوظة © 2026</p>
-                <!-- <div class="p-6 bg-white dark:bg-slate-800 rounded-3xl shadow-sm mt-5">
-                    <form method="POST">
-                        <button type="submit" name="send_test" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold">
-                            إرسال إشعار تجريبي 🔔
-                        </button>
-                    </form>
-                    <?php if(isset($msg_push)) echo "<p class='mt-2 text-green-500'>$msg_push</p>"; ?>
-                </div> -->
             </div>
             <div class="flex gap-6 text-lg font-bold">
                 <a href="https://web.facebook.com/Caesar.AhmedIbrahim" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a>
@@ -485,10 +424,10 @@ if (isset($_POST['send_test'])) {
             width: "100%",
             ease: "none",
             scrollTrigger: {
-                trigger: "body",      // هيبدأ يحسب من أول الجسم
-                start: "top top",     // البداية من أول الصفحة فوق
-                end: "bottom bottom", // النهاية مع آخر الصفحة تحت
-                scrub: 0.3            // الحركة تكون ناعمة (0.3 ثانية تأخير)
+                trigger: "body",      
+                start: "top top",     
+                end: "bottom bottom", 
+                scrub: 0.3            
             }
         });
     </script>
@@ -504,22 +443,19 @@ if (isset($_POST['send_test'])) {
         tl.from(".caesar-text", { y: 50, opacity: 0, duration: 0.8 })
         .set(".wavy-line", { visibility: "visible" })
         .from(".wavy-line path", { strokeDasharray: 200, strokeDashoffset: 200, duration: 1, ease: "power1.inOut" });
-
-        // أنيميشن الكروت (تظهر بـ "Roll" احترافي)
-    // أنيميشن كروت المحاضرات والمميزات
-    gsap.utils.toArray('.lecture-card, .feature-card').forEach((card) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: "top 90%",
-                toggleActions: "play none none none"
-            },
-            y: 60,            // يتحرك من تحت لفوق
-            opacity: 0,       // يبدأ شفاف
-            duration: 1,      // مدة الحركة ثانية
-            ease: "power3.out" // حركة ناعمة في النهاية
-        });
-    });
+	    gsap.utils.toArray('.lecture-card, .feature-card').forEach((card) => {
+	        gsap.from(card, {
+	            scrollTrigger: {
+	                trigger: card,
+	                start: "top 90%",
+	                toggleActions: "play none none none"
+	            },
+	            y: 60,           
+	            opacity: 0,       
+	            duration: 1,      
+	            ease: "power3.out"
+	        });
+	    });
     
     </script>
     <script>
@@ -538,7 +474,7 @@ if (isset($_POST['send_test'])) {
                 confirmButtonText: 'عرض الفيديو',
                 cancelButtonText: 'إلغاء',
                 confirmButtonColor: '#5c3d99',
-                reverseButtons: true, // بيخلي "إلغاء" على الشمال و"تأكيد" على اليمين (أفضل للمستخدم)
+                reverseButtons: true,
                 inputValidator: (value) => {
                     if (!value) {
                         return 'لازم تختار الصف يا بطل!';
@@ -548,7 +484,6 @@ if (isset($_POST['send_test'])) {
                 if (result.isConfirmed) {
                     let videoId = '';
                     
-                    // تحديد الـ ID بناءً على الصف
                     if (result.value === '1') videoId = 'zHu011nnwkA'; 
                     else if (result.value === '2') videoId = '3rEm5B5xAUE'; 
                     else if (result.value === '3') videoId = 'SvQTtyNYXO8'; 
@@ -577,26 +512,24 @@ if (isset($_POST['send_test'])) {
     </script>
     <script>
         var swiper = new Swiper(".gradesSwiper", {
-            slidesPerView: 1, // في الموبايل يعرض كارت واحد
-            spaceBetween: 20, // المسافة بين الكروت
+            slidesPerView: 1,
+            spaceBetween: 20, 
             loop: false,
             grabCursor: true,
             autoplay: {
-                delay: 3000, // المدة بين كل حركة (3 ثواني)
-                disableOnInteraction: false, // يكمل شغل حتى لو المستخدم لمس السلايدر
-                pauseOnMouseEnter: true, // يوقف مؤقتاً لو الماوس وقف على الكارت (عشان الطالب يلحق يقرأ)
+                delay: 3000, 
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
             },
             navigation: {
                 nextEl: ".swiper-next",
                 prevEl: ".swiper-prev",
             },
             breakpoints: {
-                // شاشات الموبايل الكبيرة
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 20,
                 },
-                // شاشات التابلت
                 1024: {
                     slidesPerView: 3,
                     spaceBetween: 30,
